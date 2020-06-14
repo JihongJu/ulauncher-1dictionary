@@ -22,7 +22,7 @@ Website             | Language (source-target | Query
 
 2. (In another terminal) Run
 ```
-VERBOSE=1 ULAUNCHER_WS_API=ws://127.0.0.1:5054/ulauncher-demo PYTHONPATH=$HOME/src/Ulauncher /usr/bin/python3 $HOME/.local/share/ulauncher/extensions/ulauncher-demo/main.py
+VERBOSE=1 ULAUNCHER_WS_API=ws://127.0.0.1:5054/ulauncher-1dictionary PYTHONPATH=$HOME/src/Ulauncher /usr/bin/python3 $HOME/.local/share/ulauncher/extensions/ulauncher-1dictionary/main.py
 ```
 
 
