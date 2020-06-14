@@ -1,6 +1,12 @@
 # Ulauncher 1Dictionary
 
-1Dictionary helps you access all your favourite dictionaries easily via Ulauncher.
+1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
+
+
+Key features:
+
+- Fuzzy search: No worries if you made a typo!
+- Configurable and extensible: Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies.
 
 
 ## Usage
