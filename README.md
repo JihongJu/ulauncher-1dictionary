@@ -59,8 +59,9 @@ VERBOSE=1 ULAUNCHER_WS_API=ws://127.0.0.1:5054/ulauncher-1dictionary PYTHONPATH=
 ```
 
 
-## Reference
+## References
 
+0. [Merriam-Webster](https://www.merriam-webster.com/) 
 1. [Linguee](https://www.linguee.nl/)
 2. [JUST WORDS!](http://www.gwicks.net/dictionaries.htm)
 
