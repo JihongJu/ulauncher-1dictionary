@@ -1,3 +1,6 @@
+import os
+import urllib
+import urllib.request
 import json
 import logging
 import pickle
@@ -12,9 +15,15 @@ from ulauncher.api.shared.action.ExtensionCustomAction import ExtensionCustomAct
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
 from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 
+from ulauncher.utils.fuzzy_search import get_score
+
+
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 
+
+DICTIONRARY_ONLINE = "https://www.linguee.com/dutch-english/search?source=auto&query={}"
+DICTIONARY_API = "https://linguee-api.herokuapp.com/api?q={}&src=nl&dst=en"
 
 
 class Word:
@@ -22,18 +31,18 @@ class Word:
         self._word = word
 
 
-    def __str__(self):
+    def __repr__(self):
         return self._word
 
     def get_search_name(self):
         return self._word
 
 
-def load_words():
-    with open("nederlands.txt", "r", encoding="ISO 8859-1") as dict_file:
+def load_words(dict_name):
+    dict_path = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(dict_path, dict_name), "r", encoding="ISO 8859-1") as dict_file:
         words = [Word(word.strip()) for word in dict_file.readlines()]
     return words
-
 
 
 
@@ -41,7 +50,7 @@ class DemoExtension(Extension):
 
     def __init__(self):
         super(DemoExtension, self).__init__()
-        self.word_list = load_words()
+        self.word_list = load_words("nederlands.txt")
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
@@ -53,17 +62,19 @@ class KeywordQueryEventListener(EventListener):
         logger.info('preferences %s' % json.dumps(extension.preferences))
         query = event.get_argument()
         if query:
-            result_list = SortedList(query, min_score=40, limit=10)
+            result_list = SortedList(query, min_score=80, limit=100)
             result_list.extend(extension.word_list)
 
-            for word in result_list:
-                data = {'new_name': '%s  was clicked' % (word)}
+            for word in sort_list(result_list, query)[:9]:
+                description = ""
+                if str(word) == query:
+                    description = translation_as_description(DICTIONARY_API.format(str(word)))
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
-                    name='%s' % (word),
-                    description='Item description %s' % word,
+                    name=str(word),
+                    description=description,
                     on_enter=OpenUrlAction(
-                        'https://www.linguee.com/dutch-english/search?source=auto&query={}'.format(word))))
+                        DICTIONRARY_ONLINE.format(str(word)))))
 
         return RenderResultListAction(items)
 
@@ -75,6 +86,44 @@ class ItemEnterEventListener(EventListener):
         return RenderResultListAction([ExtensionResultItem(icon='images/icon.png',
                                                            name=data['new_name'],
                                                            on_enter=HideWindowAction())])
+
+
+def sort_list(result_list, query):
+    return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(str(w))))
+
+
+def translation_as_description(url):
+    description = ""
+    logger.info(url)
+
+    try:
+        resp = urllib.request.urlopen(url)
+        if str(resp.getcode()).startswith('2'):
+            data=resp.read()
+            encoding=resp.info().get_content_charset("utf-8")
+            payload=json.loads(data.decode(encoding))
+
+            if payload["exact_matches"]:
+                for match in payload["exact_matches"]:
+                    word_type = match.get("word_type", {})
+                    pos = word_type.get("pos", None)
+                    if pos:
+                        description += " {}".format(pos)
+                    gender = word_type.get("gender", None)
+                    if gender:
+                        description += " ({})".format(gender)
+                    description += ": "
+
+                    translations = match.get("translations", None)
+                    if translations:
+                        description += ",".join([entry["text"] for entry in translations])
+
+                    description += ";"
+    except Exception as exc:
+        logger.exception(exc)
+    return description
+
+
 
 
 if __name__ == '__main__':
