@@ -5,9 +5,9 @@ import glob
 import logging
 from time import sleep
 from ulauncher.search.SortedList import SortedList
-from ulauncher.api.client.Extension import Extension
+from ulauncher.api.client.Extension import Extension, PreferencesEventListener
 from ulauncher.api.client.EventListener import EventListener
-from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent
+from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent, PreferencesEvent, PreferencesUpdateEvent
 
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
@@ -38,13 +38,13 @@ class Word:
         return self._word
 
 
-def load_words():
+def load_words(vocabularies):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     words = []
-    for vocabulary in glob.glob("{}/*.txt".format(base_dir)):
-        name, *_ = os.path.basename(vocabulary).split('.')
-        with open(vocabulary, "r", encoding="ISO 8859-1") as dict_file:
-            words += [Word(word.strip(), name) for word in dict_file.readlines()]
+    for vocabulary in vocabularies:
+        filename = os.path.join(base_dir, "{}.txt".format(vocabulary))
+        with open(filename, "r", encoding="ISO 8859-1") as dict_file:
+            words += [Word(word.strip(), vocabulary) for word in dict_file.readlines()]
     return words
 
 
@@ -56,7 +56,30 @@ class OneDictExtension(Extension):
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
-        self.word_list = load_words()
+        self.word_list = []
+
+    def run(self):
+        self.subscribe(PreferencesEvent, PreferencesEventListener())
+        self.subscribe(PreferencesUpdateEvent, PreferencesUpdateEventListener())
+        self._client.connect()
+
+
+class PreferencesEventListener(EventListener):
+    def on_event(self, event, extension):
+        extension.preferences.update(event.preferences)
+
+        vocabularies = [voc.rstrip().lstrip() for voc in extension.preferences["vocabulary"].split(',')]
+        extension.word_list = load_words(vocabularies)
+
+
+
+class PreferencesUpdateEventListener(EventListener):
+
+    def on_event(self, event, extension):
+        extension.preferences[event.id] = event.new_value
+
+        vocabularies = [voc.rstrip().lstrip() for voc in extension.preferences["vocabulary"].split(',')]
+        extension.word_list = load_words(vocabularies)
 
 
 class KeywordQueryEventListener(EventListener):

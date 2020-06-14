@@ -27,6 +27,13 @@
       ]
     },
     {
+      "id": "vocabulary",
+      "type": "text",
+      "name": "Active vocabulary",
+      "description": "Active vocabularies: comma-delimted text. Supported vocabularies: deutsch, english, espanol, francais, italiano, nederlands, norsk, swiss",
+      "default_value": "english, nederlands"
+    },
+    {
       "id": "online_dictionary",
       "type": "text",
       "name": "Online dictionary",
