@@ -21,22 +21,29 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 
+DEFAULT_DICTIONARY="https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=%s"
+
+
 class Word:
-    def __init__(self, word):
+    def __init__(self, word, vocabulary):
         self._word = word
+        self._vocabulary = vocabulary
 
 
     def __repr__(self):
-        return self._word
+        return "{}/{}".format(self._word, self._vocabulary)
 
     def get_search_name(self):
         return self._word
 
 
-def load_words(dict_name):
-    dict_path = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(dict_path, dict_name), "r", encoding="ISO 8859-1") as dict_file:
-        words = [Word(word.strip()) for word in dict_file.readlines()]
+def load_words():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    words = []
+    for vocabulary in glob.glob("{}/*.txt".format(base_dir)):
+        name, *_ = os.path.basename(vocabulary).split('.')
+        with open(vocabulary, "r", encoding="ISO 8859-1") as dict_file:
+            words += [Word(word.strip(), name) for word in dict_file.readlines()]
     return words
 
 
@@ -48,7 +55,7 @@ class OneDictExtension(Extension):
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
-        self.word_list = load_words("1vocabulary.txt")
+        self.word_list = load_words()
 
 
 class KeywordQueryEventListener(EventListener):
@@ -57,17 +64,23 @@ class KeywordQueryEventListener(EventListener):
         items = []
         query = event.get_argument()
         if query:
-            result_list = SortedList(query, min_score=80, limit=100)
+            result_list = SortedList(query, min_score=40, limit=40)
             result_list.extend(extension.word_list)
 
-            for word in sort_list(result_list, query)[:9]:
-                description = ""
+            dictionaries = {}
+            for row in extension.preferences["online_dictionary"].split(';'):
+                lang, url = row.split(',')
+                dictionaries[lang.rstrip().lstrip()] = url.rstrip().lstrip()
+
+
+            for result in sort_list(result_list, query)[:9]:
+                word, language = str(result).split('/')
+
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
-                    name=str(word),
-                    description=description,
-                    on_enter=OpenUrlAction(
-                        extension.preferences["online_dictionary"] % str(word))))
+                    name=word,
+                    description="Language: {}".format(language),
+                    on_enter=OpenUrlAction(dictionaries.get(language, DEFAULT_DICTIONARY) % word)))
 
         return RenderResultListAction(items)
 

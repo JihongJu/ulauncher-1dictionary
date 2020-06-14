@@ -20,7 +20,7 @@
       "type": "text",
       "name": "Online dictionary",
       "description": "Query for the online dictionary, e.g. Linguee, Youdao, Merriam-Webster",
-      "default_value": "https://www.linguee.com/dutch-english/search?source=auto&query=%s"
+      "default_value": "english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s"
     }
   ]
 }
