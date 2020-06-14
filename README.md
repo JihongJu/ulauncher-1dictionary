@@ -1,6 +1,5 @@
 # Ulauncher 1Dictionary
-
-![logo](images/icon.png) 1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
+<img src="images/icon.png" alt="drawing" width="32"/> 1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
 
 
 Key features:
