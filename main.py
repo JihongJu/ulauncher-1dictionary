@@ -96,8 +96,11 @@ class KeywordQueryEventListener(EventListener):
 
             dictionaries = {}
             for row in extension.preferences["online_dictionary"].split(';'):
-                lang, url = row.split(',')
-                dictionaries[lang.rstrip().lstrip()] = url.rstrip().lstrip()
+                try:
+                    lang, url = row.split(',')
+                    dictionaries[lang.rstrip().lstrip()] = url.rstrip().lstrip()
+                except ValueError as ve:
+                    logger.exception(ve)
 
 
             for result in sort_list(result_list, query)[:9]:
