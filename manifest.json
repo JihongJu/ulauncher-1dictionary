@@ -1,32 +1,26 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "Demo",
+  "name": "Jihong",
   "description": "Demo extension",
-  "developer_name": "Aleksandr Gornostal",
+  "developer_name": "Jihong Ju",
   "icon": "images/icon.png",
   "options": {
     "query_debounce": 0.05
   },
   "preferences": [
     {
-      "id": "demo_kw",
+      "id": "keyword",
       "type": "keyword",
-      "name": "Demo",
-      "default_value": "dm"
+      "name": "1dictionary",
+      "description": "Keyword to trigger 1dictionary",
+      "default_value": "ad"
     },
     {
-      "id": "item_name",
-      "type": "input",
-      "name": "Item name",
-      "description": "Name for each item",
-      "default_value": "Item"
-    },
-    {
-      "id": "memo",
+      "id": "online_dictionary",
       "type": "text",
-      "name": "Memo",
-      "description": "Write something here",
-      "default_value": ""
+      "name": "Online dictionary",
+      "description": "Query for the online dictionary, e.g. Linguee, Youdao, Merriam-Webster",
+      "default_value": "https://www.linguee.com/dutch-english/search?source=auto&query=%s"
     }
   ]
 }

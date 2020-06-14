@@ -1,6 +1,21 @@
 # Demo Extension
 
 
+## Usage
+
+
+## Custom dictionary
+
+1. Overwrite the default vocabulary located at `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary/1vocabulary.txt` with your own vocabulary. Note that the vocabulary is a newline-delimited text file. The default vocabulary is a Dutch vocabulary. You could download vocabulary for other languages at [JUST WORDS!](http://www.gwicks.net/dictionaries.htm).
+
+2. Change the default online dictionary from Linguee (ducth-english) to the one fits you the best, for example, 
+
+Website             | Language (source-target | Query 
+--- | --- | --- 
+[Merriam-Webster](https://www.merriam-webster.com/) | en-en | https://www.merriam-webster.com/dictionary/%s
+[Linguee](https://www.linguee.com/)                 | nl-en | https://www.linguee.com/dutch-english/search?source=auto&query=%s
+
+
 ## Development
 1. (Exit Ulauncher if it's running) Run
 ```ulauncher --no-extensions --dev -v```

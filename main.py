@@ -1,14 +1,13 @@
 import os
-import urllib
-import urllib.request
 import json
+import glob
 import logging
-import pickle
 from time import sleep
 from ulauncher.search.SortedList import SortedList
 from ulauncher.api.client.Extension import Extension
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent
+
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
 from ulauncher.api.shared.action.ExtensionCustomAction import ExtensionCustomAction
@@ -20,10 +19,6 @@ from ulauncher.utils.fuzzy_search import get_score
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
-
-
-DICTIONRARY_ONLINE = "https://www.linguee.com/dutch-english/search?source=auto&query={}"
-DICTIONARY_API = "https://linguee-api.herokuapp.com/api?q={}&src=nl&dst=en"
 
 
 class Word:
@@ -46,20 +41,20 @@ def load_words(dict_name):
 
 
 
-class DemoExtension(Extension):
+class OneDictExtension(Extension):
 
     def __init__(self):
-        super(DemoExtension, self).__init__()
-        self.word_list = load_words("nederlands.txt")
+        super(OneDictExtension, self).__init__()
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
+
+        self.word_list = load_words("1vocabulary.txt")
 
 
 class KeywordQueryEventListener(EventListener):
 
     def on_event(self, event, extension):
         items = []
-        logger.info('preferences %s' % json.dumps(extension.preferences))
         query = event.get_argument()
         if query:
             result_list = SortedList(query, min_score=80, limit=100)
@@ -67,14 +62,12 @@ class KeywordQueryEventListener(EventListener):
 
             for word in sort_list(result_list, query)[:9]:
                 description = ""
-                if str(word) == query:
-                    description = translation_as_description(DICTIONARY_API.format(str(word)))
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
                     name=str(word),
                     description=description,
                     on_enter=OpenUrlAction(
-                        DICTIONRARY_ONLINE.format(str(word)))))
+                        extension.preferences["online_dictionary"] % str(word))))
 
         return RenderResultListAction(items)
 
@@ -92,39 +85,5 @@ def sort_list(result_list, query):
     return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(str(w))))
 
 
-def translation_as_description(url):
-    description = ""
-    logger.info(url)
-
-    try:
-        resp = urllib.request.urlopen(url)
-        if str(resp.getcode()).startswith('2'):
-            data=resp.read()
-            encoding=resp.info().get_content_charset("utf-8")
-            payload=json.loads(data.decode(encoding))
-
-            if payload["exact_matches"]:
-                for match in payload["exact_matches"]:
-                    word_type = match.get("word_type", {})
-                    pos = word_type.get("pos", None)
-                    if pos:
-                        description += " {}".format(pos)
-                    gender = word_type.get("gender", None)
-                    if gender:
-                        description += " ({})".format(gender)
-                    description += ": "
-
-                    translations = match.get("translations", None)
-                    if translations:
-                        description += ",".join([entry["text"] for entry in translations])
-
-                    description += ";"
-    except Exception as exc:
-        logger.exception(exc)
-    return description
-
-
-
-
 if __name__ == '__main__':
-    DemoExtension().run()
+    OneDictExtension().run()
