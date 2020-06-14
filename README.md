@@ -20,6 +20,13 @@ Key features:
 
 ## Installation
 
+Open Ulauncher Preferences, go to the "Extentions tab", click "Add Extension" and copy-paste the following link:
+
+```
+https://github.com/JihongJu/ulauncher-1dictionary
+```
+
+
 ![installation](installation.gif)
 
 
