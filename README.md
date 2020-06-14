@@ -15,6 +15,14 @@ Key features:
 ![demo](ulauncher-1dictionary.gif)
 
 
+## Dependency
+
+- [Ulauncher](https://ulauncher.io/)
+
+## Installation
+
+
+
 
 ## Custom dictionaries
 
