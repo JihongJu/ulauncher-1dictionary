@@ -41,7 +41,7 @@ By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, N
 
 Active your favourate vocabulory by adding it to the "Active vocabulary" field as comma-delimted text:
 
-![activate-vocabulary](images/activate-vocabulary.png)
+![active-vocabulary](images/active-vocabulary.png)
 
 
 Notes:
@@ -64,14 +64,14 @@ Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/
 
 ### Configure online dictionary service
 
-Apart from English and Nederlands, 1Dictionary uses [Google Translate]() for other languages. You can add your preferred online dictionary service to gain better experience. 
+Except for English and Nederlands, 1Dictionary uses [Google Translate](https://translate.google.com/) for other languages. You can add your preferred online dictionary service to gain better experience. 
 
-Online dictionary service can be configured in the "Online dictionary" field on the  extension preference page:
+Online dictionary service can be configured in the "Online dictionary service" field on the extension preference page:
 
 ![online-dictionary](images/online-dictionary.png)
 
 
-Online dictionary | vocabulary needed  |  Option (language, query) 
+Online dictionary service | Vocabulary needed  |  Configuraion 
 --- | --- | --- 
 [Merriam-Webster](https://www.merriam-webster.com/) | english.txt | english, https://www.merriam-webster.com/dictionary/%s
 [Linguee](https://www.linguee.com/)                 | nederlands.txt | nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s
