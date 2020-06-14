@@ -65,11 +65,9 @@ class KeywordQueryEventListener(EventListener):
         items = []
         query = event.get_argument()
         if query:
-            # First regex (Fast)
-            result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
-
-            # Then fuzzy find (slow)
-            if not result_list:
+            if extension.preferences["matching"] == "regex":
+                result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
+            else:
                 result_list = SortedList(query, min_score=40, limit=40)
                 result_list.extend(extension.word_list)
 

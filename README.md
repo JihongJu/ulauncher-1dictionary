@@ -1,19 +1,45 @@
-# Demo Extension
+# Ulauncher 1Dictionary
+
+1Dictionary helps you access all your favourite dictionaries easily via Ulauncher.
 
 
 ## Usage
 
 
-## Custom dictionary
 
-1. Overwrite the default vocabulary located at `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary/1vocabulary.txt` with your own vocabulary. Note that the vocabulary is a newline-delimited text file. The default vocabulary is a Dutch vocabulary. You could download vocabulary for other languages at [JUST WORDS!](http://www.gwicks.net/dictionaries.htm).
 
-2. Change the default online dictionary from Linguee (ducth-english) to the one fits you the best, for example, 
+## Custom dictionaries
 
-Website             | Language (source-target | Query 
+1. Add the vocabulary of your source language to the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary`. The vocabulary is a newline-delimited text file. The filename indicates the language, e.g.,
+
+language | vocabulary file name
+--- | ---
+English | english.txt
+Nederlands | nederlands.txt
+
+English and Nederlands are the default vocabularies. You can find more vocabularies on [JUST WORDS!](http://www.gwicks.net/dictionaries.htm).
+
+
+Notes:
+
+- The more vocabularies, the slower the search is. Speed is often not an issue on most modern computers. But in case you feel laggy. Consider remove vocabularies you don't need. This can be done as simple as deleting the corresponding vocabulary file.
+
+
+
+2. Add your favourtie online dictionary to the "Online dictionary" field on the  extension preference page 
+
+Online dictionary | vocabulary needed  |  Option (language, query) 
 --- | --- | --- 
-[Merriam-Webster](https://www.merriam-webster.com/) | en-en | https://www.merriam-webster.com/dictionary/%s
-[Linguee](https://www.linguee.com/)                 | nl-en | https://www.linguee.com/dutch-english/search?source=auto&query=%s
+[Merriam-Webster](https://www.merriam-webster.com/) | english.txt | english, https://www.merriam-webster.com/dictionary/%s
+[Linguee](https://www.linguee.com/)                 | nederlands.txt | nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s
+ [Merriam-Webster](https://www.merriam-webster.com/) and [Linguee](https://www.linguee.com/) | english.txt and nederlands.txt | english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s
+Any other online dictionary | anyvocabulary.txt | anyvocabulary, query-for-any-online-dictionary-with-a-word-placeholder-'%s'
+
+Notes:
+
+- Use `%s` as the placeholder for the word to search in the query
+- Use `,` to delimit language and query; The name of the language has to match the vocabulary file name, e.g. english -> english.txt, nederlands -> nederlands.txt
+- Use `;` to delimit different dictionaries, for example, `english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s`
 
 
 ## Development

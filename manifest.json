@@ -1,7 +1,7 @@
 {
   "required_api_version": "^2.0.0",
-  "name": "Jihong",
-  "description": "Demo extension",
+  "name": "1Dictionary",
+  "description": "1Dictionary helps you access all your favourite dictionaries easily via Ulauncher.",
   "developer_name": "Jihong Ju",
   "icon": "images/icon.png",
   "options": {
@@ -11,9 +11,20 @@
     {
       "id": "keyword",
       "type": "keyword",
-      "name": "1dictionary",
+      "name": "1Dictionary",
       "description": "Keyword to trigger 1dictionary",
-      "default_value": "ad"
+      "default_value": "1d"
+    },
+    {
+      "id": "matching",
+      "type": "text",
+      "name": "Matching method",
+      "description": "Matching method. Choose 'regex' if you feel 'fuzzy' is too slow",
+      "default_value": "fuzzy",
+      "options": [
+          "fuzzy",
+          "regex"
+      ]
     },
     {
       "id": "online_dictionary",
