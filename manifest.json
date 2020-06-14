@@ -12,7 +12,7 @@
       "id": "keyword",
       "type": "keyword",
       "name": "1Dictionary",
-      "description": "Keyword to trigger 1dictionary",
+      "description": "",
       "default_value": "1d"
     },
     {
