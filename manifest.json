@@ -30,7 +30,7 @@
       "id": "online_dictionary",
       "type": "text",
       "name": "Online dictionary",
-      "description": "Query for the online dictionary, e.g. Linguee, Youdao, Merriam-Webster",
+      "description": "Query for the online dictionary in the format of 'vocabulary0, query_url0; vocabulary 1, query_url1'. Please refer to https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries",
       "default_value": "english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s"
     }
   ]

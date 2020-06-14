@@ -5,6 +5,7 @@
 
 ## Usage
 
+![demo](ulauncher-1dictionary.gif)
 
 
 
@@ -14,8 +15,8 @@
 
 language | vocabulary file name
 --- | ---
-English | english.txt
-Nederlands | nederlands.txt
+English | [english.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
+Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
 
 English and Nederlands are the default vocabularies. You can find more vocabularies on [JUST WORDS!](http://www.gwicks.net/dictionaries.htm).
 
