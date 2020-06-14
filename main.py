@@ -3,6 +3,8 @@ import os
 import json
 import glob
 import logging
+import urllib	
+import urllib.request
 from time import sleep
 from ulauncher.search.SortedList import SortedList
 from ulauncher.api.client.Extension import Extension, PreferencesEventListener
@@ -23,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 DEFAULT_DICTIONARY="https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=%s"
+DICTIONARY_API = "https://linguee-api.herokuapp.com/api?q={}&src=nl&dst=en"
 
 
 class Word:
@@ -103,10 +106,14 @@ class KeywordQueryEventListener(EventListener):
             for result in sort_list(result_list, query)[:9]:
                 word, language = str(result).split('/')
 
+                description = "Language: {}".format(language)
+                if str(word) == query and language == "nederlands":	
+                    description = translation_as_description(DICTIONARY_API.format(word))
+
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
                     name=word,
-                    description="Language: {}".format(language),
+                    description=description,
                     on_enter=OpenUrlAction(dictionaries.get(language, DEFAULT_DICTIONARY) % word)))
 
         return RenderResultListAction(items)
@@ -123,6 +130,42 @@ class ItemEnterEventListener(EventListener):
 
 def sort_list(result_list, query):
     return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(w.get_search_name())))
+
+
+
+def translation_as_description(url):	
+    description = ""	
+    logger.info(url)	
+
+    try:	
+        resp = urllib.request.urlopen(url)	
+        if str(resp.getcode()).startswith('2'):	
+            data=resp.read()	
+            encoding=resp.info().get_content_charset("utf-8")	
+            payload=json.loads(data.decode(encoding))	
+
+            if payload["exact_matches"]:	
+                description += "[nl]"
+                for idx, match in enumerate(payload["exact_matches"]):
+                    word_type = match.get("word_type", {})	
+                    description += " {}.".format(idx)
+                    pos = word_type.get("pos", None)	
+                    if pos:	
+                        description += "{}".format(pos)	
+                    gender = word_type.get("gender", None)	
+                    if gender:	
+                        description += " ({})".format(gender)	
+                    description += ": "	
+
+                    translations = match.get("translations", None)	
+                    if translations:	
+                        description += ",".join([entry["text"] for entry in translations])	
+
+                    description += ";"	
+    except Exception as exc:	
+        logger.exception(exc)	
+    return description	
+
 
 
 if __name__ == '__main__':
