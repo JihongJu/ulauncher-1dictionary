@@ -21,6 +21,7 @@ Key features:
 
 ## Installation
 
+![installation](installation.gif)
 
 
 
