@@ -108,7 +108,9 @@ class KeywordQueryEventListener(EventListener):
 
                 description = "Language: {}".format(language)
                 if str(word) == query and language == "nederlands":	
-                    description = translation_as_description(DICTIONARY_API.format(word))
+                    translation = translation_as_description(DICTIONARY_API.format(word))
+                    if translation:
+                        description = translation
 
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
