@@ -1,6 +1,6 @@
 # Ulauncher 1Dictionary
 
-1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
+![logo](images/icon.png) 1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
 
 
 Key features:
