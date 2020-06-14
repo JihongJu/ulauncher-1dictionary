@@ -6,7 +6,8 @@
 Key features:
 
 - Fuzzy search: No worries if you made a typo!
-- Configurable and extensible: Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies.
+- Multi language support: English words can be searched together with Dutch words.
+- Configurable and extensible: The supported languages are certainly not limited to English and Nederstands. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies for your favourite languages.
 
 
 ## Usage
