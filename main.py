@@ -1,3 +1,4 @@
+import re
 import os
 import json
 import glob
@@ -64,8 +65,13 @@ class KeywordQueryEventListener(EventListener):
         items = []
         query = event.get_argument()
         if query:
-            result_list = SortedList(query, min_score=40, limit=40)
-            result_list.extend(extension.word_list)
+            # First regex (Fast)
+            result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
+
+            # Then fuzzy find (slow)
+            if not result_list:
+                result_list = SortedList(query, min_score=40, limit=40)
+                result_list.extend(extension.word_list)
 
             dictionaries = {}
             for row in extension.preferences["online_dictionary"].split(';'):
@@ -95,7 +101,7 @@ class ItemEnterEventListener(EventListener):
 
 
 def sort_list(result_list, query):
-    return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(str(w))))
+    return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(w.get_search_name())))
 
 
 if __name__ == '__main__':
