@@ -6,12 +6,13 @@ Key features:
 
 - Fuzzy search: No worries if you made a typo!
 - Multi language support: English words can be searched together with Dutch words.
-- Configurable and extensible: The supported languages are certainly not limited to English and Nederstands. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies for your favourite languages.
+- Configurable: The supported languages are certainly not limited to English and Nederlands. Supported languages include: Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk, Swiss. For languages other than English and Nederlands. You will need to find yourself a decent online dictionary service and add it to the Online dictionary section of the extension preference. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information.
+- Extensible: It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies for your favourite languages.
 
 
 ## Usage
 
-![demo](ulauncher-1dictionary.gif)
+![demo](images/ulauncher-1dictionary.gif)
 
 
 ## Dependency
@@ -27,29 +28,48 @@ https://github.com/JihongJu/ulauncher-1dictionary
 ```
 
 
-![installation](installation.gif)
+![installation](images/installation.gif)
 
 
 
 ## Custom dictionaries
 
-1. Add the vocabulary of your source language to the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary`. The vocabulary is a newline-delimited text file. The filename indicates the language, e.g.,
+
+### Configure vocabulary
+
+By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk and Swiss. Configuration is possible in the "Vocabulary" section of the extension preference.
+
+Active your favourate vocabulory by adding it to the "Active vocabulary" field as comma-delimted text:
+
+![activate-vocabulary](images/activate-vocabulary.png)
+
+
+Notes:
+
+- The more vocabularies activated, the slower the search is. Speed is often not an issue on most modern computers. But in case you feel laggy. Consider deactivating the vocabularies you don't need, or switch to the 'regex' matching method.
+
+
+### Extend vocabulary
+
+Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, Norsk and Swiss from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vacabulary file.
+
+The vocabulary files locate in the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary`. Each vocabulary file is a newline-delimited text file. The filename indicates the language, e.g.,
 
 language | vocabulary file name
 --- | ---
 English | [english.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
 Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
 
-English and Nederlands are the default vocabularies. You can find more vocabularies on [JUST WORDS!](http://www.gwicks.net/dictionaries.htm).
 
 
-Notes:
+### Configure online dictionary service
 
-- The more vocabularies, the slower the search is. Speed is often not an issue on most modern computers. But in case you feel laggy. Consider remove vocabularies you don't need. This can be done as simple as deleting the corresponding vocabulary file.
+Apart from English and Nederlands, 1Dictionary uses [Google Translate]() for other languages. You can add your preferred online dictionary service to gain better experience. 
 
+Online dictionary service can be configured in the "Online dictionary" field on the  extension preference page:
 
+![online-dictionary](images/online-dictionary.png)
 
-2. Add your favourtie online dictionary to the "Online dictionary" field on the  extension preference page 
 
 Online dictionary | vocabulary needed  |  Option (language, query) 
 --- | --- | --- 
