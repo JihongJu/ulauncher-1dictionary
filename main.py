@@ -125,7 +125,13 @@ class ItemEnterEventListener(EventListener):
 
 
 def sort_list(result_list, query):
-    return sorted(result_list, key=lambda w: (-get_score(query, w.get_search_name()), len(w.get_search_name())))
+    return sorted(
+            result_list,
+            key=lambda w: (
+                -get_score(query, w.get_search_name()),
+                abs(len(w.get_search_name()) - len(query))
+            )
+    )
 
 
 if __name__ == '__main__':
