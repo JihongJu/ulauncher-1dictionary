@@ -5,6 +5,7 @@ import glob
 import logging
 from time import sleep
 from ulauncher.search.SortedList import SortedList
+from ulauncher.utils.SortedCollection import SortedCollection
 from ulauncher.api.client.Extension import Extension, PreferencesEventListener
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent, PreferencesEvent, PreferencesUpdateEvent
@@ -88,12 +89,6 @@ class KeywordQueryEventListener(EventListener):
         items = []
         query = event.get_argument()
         if query:
-            if extension.preferences["matching"] == "regex":
-                result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
-            else:
-                result_list = SortedList(query, min_score=40, limit=40)
-                result_list.extend(extension.word_list)
-
             dictionaries = {}
             for row in extension.preferences["online_dictionary"].split(';'):
                 try:
@@ -102,8 +97,13 @@ class KeywordQueryEventListener(EventListener):
                 except ValueError as ve:
                     logger.exception(ve)
 
+            if extension.preferences["matching"] == "regex":
+                result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
+            else:
+                result_list = CustomSortedList(query, min_score=60)
+                result_list.extend(extension.word_list)
 
-            for result in sort_list(result_list, query)[:9]:
+            for result in result_list[:9]:
                 word, language = str(result).split('/')
 
                 items.append(ExtensionResultItem(
@@ -124,14 +124,11 @@ class ItemEnterEventListener(EventListener):
                                                            on_enter=HideWindowAction())])
 
 
-def sort_list(result_list, query):
-    return sorted(
-            result_list,
-            key=lambda w: (
-                -get_score(query, w.get_search_name()),
-                abs(len(w.get_search_name()) - len(query))
-            )
-    )
+
+class CustomSortedList(SortedList):
+    def __init__(self, query, min_score):
+        super(CustomSortedList, self).__init__(query, min_score, limit=9)
+        self._items = SortedCollection(key=lambda i: (i.score, abs(len(self._query) - len(i.get_search_name()))))
 
 
 if __name__ == '__main__':
