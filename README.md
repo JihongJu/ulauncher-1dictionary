@@ -4,10 +4,10 @@
 
 Key features:
 
-- Fuzzy search: No worries if you made a typo!
-- Multi language support: English words can be searched together with Dutch words.
-- Configurable: The supported languages are certainly not limited to English and Nederlands. Supported languages include: Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk, Swiss. For languages other than English and Nederlands. You will need to find yourself a decent online dictionary service and add it to the Online dictionary section of the extension preference. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information.
-- Extensible: It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add your favourite online dictionar~~y~~ies for your favourite languages.
+- Fuzzy search: No worries for typo anymore
+- Multi language support: Many languages can be searched altogether. For example, English words can be searched together with Dutch words. 
+- Configurable: English and Nederlands are the default active languages. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information about how to activate other languages, including: Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk, Swiss. 
+- Extensible: It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add custom lanaguage(s) and the corresponding online dictionar~~y~~ies.
 
 
 ## Usage
@@ -15,9 +15,9 @@ Key features:
 ![demo](images/ulauncher-1dictionary.gif)
 
 
-## Dependency
+## Requirements
 
-- [Ulauncher](https://ulauncher.io/)
+- [Ulauncher 5.0+](https://ulauncher.io/)
 
 ## Installation
 
