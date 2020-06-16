@@ -121,6 +121,13 @@ class KeywordQueryEventListener(EventListener):
                     description=description,
                     on_enter=OpenUrlAction(dictionaries.get(language, DEFAULT_DICTIONARY) % word)))
 
+        else:
+            items.append(ExtensionResultItem(
+                icon='images/icon.png',
+                name="Type in the word...",
+                description="",
+                ))
+
         return RenderResultListAction(items)
 
 
