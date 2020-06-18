@@ -1,4 +1,5 @@
 import re
+import csv
 import os
 import json
 import glob
@@ -53,6 +54,21 @@ def load_words(vocabularies):
 
 
 
+def load_dictionary():
+    filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
+    with open(filename, 'r') as file:
+        nederlands = json.load(file)
+    return nederlands
+
+
+def dump_dictionary(nederlands):
+    filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
+    with open(filename, 'w') as file:
+        json.dump(nederlands, file)
+    return
+
+
+
 class OneDictExtension(Extension):
 
     def __init__(self):
@@ -61,6 +77,8 @@ class OneDictExtension(Extension):
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
         self.word_list = []
+        self.nederlands_dict = load_dictionary()
+
 
     def run(self):
         self.subscribe(PreferencesEvent, PreferencesEventListener())
@@ -110,8 +128,11 @@ class KeywordQueryEventListener(EventListener):
                 word, language = str(result).split('/')
 
                 description = "Language: {}".format(language)
-                if str(word) == query and language == "nederlands":	
-                    translation = translation_as_description(DICTIONARY_API.format(word))
+                if language == "nederlands" and word in extension.nederlands_dict:
+                    description = extension.nederlands_dict[word]
+
+                if word == query and language == "nederlands" and word not in extension.nederlands_dict:	
+                    translation = translation_as_description(word, extension)
                     if translation:
                         description = translation
 
@@ -148,11 +169,12 @@ class CustomSortedList(SortedList):
 
 
 
-def translation_as_description(url):	
+def translation_as_description(word, extension):	
     description = ""	
-    logger.info(url)	
 
     try:	
+        url = DICTIONARY_API.format(word)
+        logger.info(url)	
         resp = urllib.request.urlopen(url)	
         if str(resp.getcode()).startswith('2'):	
             data=resp.read()	
@@ -177,6 +199,8 @@ def translation_as_description(url):
                         description += ",".join([entry["text"] for entry in translations])	
 
                     description += ";"	
+                extension.nederlands_dict[word] = description
+                dump_dictionary(extension.nederlands_dict)
     except Exception as exc:	
         logger.exception(exc)	
     return description	
@@ -185,3 +209,4 @@ def translation_as_description(url):
 
 if __name__ == '__main__':
     OneDictExtension().run()
+
