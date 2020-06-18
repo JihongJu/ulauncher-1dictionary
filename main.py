@@ -1,11 +1,8 @@
 import re
-import csv
 import os
 import json
 import glob
 import logging
-import urllib	
-import urllib.request
 from time import sleep
 from ulauncher.search.SortedList import SortedList
 from ulauncher.utils.SortedCollection import SortedCollection
@@ -27,7 +24,6 @@ logger = logging.getLogger(__name__)
 
 
 DEFAULT_DICTIONARY="https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=%s"
-DICTIONARY_API = "https://linguee-api.herokuapp.com/api?q={}&src=nl&dst=en"
 
 
 class Word:
@@ -53,25 +49,6 @@ def load_words(vocabularies):
     return words
 
 
-
-def load_dictionary():
-    filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
-    nederlands = {}
-    if os.path.exists(filename):
-        with open(filename, 'r') as file:
-            nederlands = json.load(file)
-    return nederlands
-
-
-def dump_dictionary(nederlands):
-    filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
-    if os.path.exists(filename):
-        with open(filename, 'w') as file:
-            json.dump(nederlands, file)
-    return
-
-
-
 class OneDictExtension(Extension):
 
     def __init__(self):
@@ -80,7 +57,6 @@ class OneDictExtension(Extension):
         self.subscribe(ItemEnterEvent, ItemEnterEventListener())
 
         self.word_list = []
-        self.nederlands_dict = load_dictionary()
 
 
     def run(self):
@@ -131,13 +107,6 @@ class KeywordQueryEventListener(EventListener):
                 word, language = str(result).split('/')
 
                 description = "Language: {}".format(language)
-                if language == "nederlands" and word in extension.nederlands_dict:
-                    description = extension.nederlands_dict[word]
-
-                if word == query and language == "nederlands" and word not in extension.nederlands_dict:	
-                    translation = translation_as_description(word, extension)
-                    if translation:
-                        description = translation
 
                 items.append(ExtensionResultItem(
                     icon='images/icon.png',
@@ -164,49 +133,10 @@ class ItemEnterEventListener(EventListener):
                                                            on_enter=HideWindowAction())])
 
 
-
 class CustomSortedList(SortedList):
     def __init__(self, query, min_score):
         super(CustomSortedList, self).__init__(query, min_score, limit=9)
         self._items = SortedCollection(key=lambda i: (i.score, abs(len(self._query) - len(i.get_search_name()))))
-
-
-
-def translation_as_description(word, extension):	
-    description = ""	
-
-    try:	
-        url = DICTIONARY_API.format(word)
-        logger.info(url)	
-        resp = urllib.request.urlopen(url)	
-        if str(resp.getcode()).startswith('2'):	
-            data=resp.read()	
-            encoding=resp.info().get_content_charset("utf-8")	
-            payload=json.loads(data.decode(encoding))	
-
-            if payload["exact_matches"]:	
-                description += "[nl]"
-                for idx, match in enumerate(payload["exact_matches"]):
-                    word_type = match.get("word_type", {})	
-                    description += " {}.".format(idx)
-                    pos = word_type.get("pos", None)	
-                    if pos:	
-                        description += "{}".format(pos)	
-                    gender = word_type.get("gender", None)	
-                    if gender:	
-                        description += " ({})".format(gender)	
-                    description += ": "	
-
-                    translations = match.get("translations", None)	
-                    if translations:	
-                        description += ",".join([entry["text"] for entry in translations])	
-
-                    description += ";"	
-                extension.nederlands_dict[word] = description
-                dump_dictionary(extension.nederlands_dict)
-    except Exception as exc:	
-        logger.exception(exc)	
-    return description	
 
 
 
