@@ -56,15 +56,18 @@ def load_words(vocabularies):
 
 def load_dictionary():
     filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
-    with open(filename, 'r') as file:
-        nederlands = json.load(file)
+    nederlands = {}
+    if os.path.exists(filename):
+        with open(filename, 'r') as file:
+            nederlands = json.load(file)
     return nederlands
 
 
 def dump_dictionary(nederlands):
     filename = os.path.expanduser(os.path.join("~", "Dropbox", "cache", "1dictionary-nederlands.json"))
-    with open(filename, 'w') as file:
-        json.dump(nederlands, file)
+    if os.path.exists(filename):
+        with open(filename, 'w') as file:
+            json.dump(nederlands, file)
     return
 
 
