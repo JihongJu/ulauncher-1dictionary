@@ -43,7 +43,7 @@ def load_words(vocabularies):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     words = []
     for vocabulary in vocabularies:
-        filename = os.path.join(base_dir, "{}.txt".format(vocabulary))
+        filename = os.path.join(base_dir, "vocabularies", "{}.txt".format(vocabulary))
         with open(filename, "r", encoding="ISO 8859-1") as dict_file:
             words += [Word(word.strip(), vocabulary) for word in dict_file.readlines()]
     return words
