@@ -7,7 +7,7 @@
 - **Fuzzy search** No worries for typo anymore!
 - **Multi language support** Many languages can be searched altogether. For example, English words can be searched together with Dutch words, as well as French, Spanish, Italian, German, Norwegian, and any other language.
 - **Configurable** English and Nederlands are the default active languages. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information about how to activate other languages.
-- **Extensible** If you are learning languages other than the default supported languages (Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk). It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add custom lanaguage(s) and the corresponding online dictionar~~y~~ies.
+- **Extensible** If you are learning languages other than the default supported languages. It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add custom vocabular~~y~~ies and the corresponding online dictionar~~y~~ies.
 
 
 ## Usage
@@ -37,9 +37,9 @@ https://github.com/JihongJu/ulauncher-1dictionary
 
 ### Configure vocabulary
 
-By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, Nederlands, and Norsk.  But only English and German are activated by default. You can modify the list of active vocabularies via the "Vocabulary" section of the extension preference.
+By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, Nederlands, and Norsk. But only English and Nederlands are activated by default. You can modify the list of active vocabularies via the "Vocabulary" section of the extension preference.
 
-Active your favourate vocabulory by adding it to the "Active vocabulary" field as comma-delimted text:
+Active your favourate vocabulory by adding it to the "Active vocabulary" field as comma-delimted text on the `Ulauncher->Preferences->Extensions->1Dictionary` page:
 
 ![active-vocabulary](images/active-vocabulary.png)
 
@@ -49,9 +49,9 @@ Notes:
 - The more vocabularies activated, the slower the search is. Speed is often not an issue on modern computers. But in case you feel laggy. Consider deactivating the vocabularies you don't need, or switch to the 'regex' matching method.
 
 
-### Default dictionaries
+### Configure dictionaries
 
-1Dictionary uses the following online dictionary services for default vocabularies:
+1Dictionary uses the following online dictionary services by default for the supported vocabularies:
 
 Online dictionary service | Vocabulary  |  Dictionary URL 
 --- | --- | --- 
@@ -63,17 +63,24 @@ Online dictionary service | Vocabulary  |  Dictionary URL
 [Linguee](https://www.linguee.com/)                     | nederlands    | https://www.linguee.com/dutch-english/search?source=auto&query=%s
 [Google Translate](https://translate.google.com/)       | norsk         | https://translate.google.com/#view=home&op=translate&sl=no&tl=en&text=%s
 
+It is possible to modify the dictionary URL via `Ulauncher->Preferences->Extensions->1Dictionary` in the corresponding configuration field.
+
 
 ### Extend vocabulary
 
 Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, and Norsk from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vacabulary file.
 
-The vocabulary files locate in the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary`. Each vocabulary file is a newline-delimited text file. The filename indicates the language, e.g.,
+The vocabulary files locate in the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary/vocabularies`. Each vocabulary file is a newline-delimited text file. The filename indicates the language, e.g.,
 
 language | vocabulary file name
 --- | ---
 English | [english.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/english.txt)
-Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/.txt)
+Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/nederlands.txt)
+Espanol | [espanol.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/espanol.txt)
+Deutsch | [deutsch.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/deutsch.txt)
+Francais | [francais.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/francais.txt)
+Italiano | [italiano.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/italiano.txt)
+Norsk | [norsk.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/norsk.txt)
 
 
 ### Configure online dictionary services
