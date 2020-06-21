@@ -12,7 +12,7 @@
 
 ## Usage
 
-![demo](images/ulauncher-1dictionary.gif)
+![demo](images/demo.gif)
 
 
 ## Requirements
@@ -21,7 +21,7 @@
 
 ## Installation
 
-Open Ulauncher Preferences, go to the "Extentions tab", click "Add Extension" and copy-paste the following link:
+Open Ulauncher Preferences, go to the "Extentions tab", click "Add Extension", copy-paste the following link and click the "Add" button:
 
 ```
 https://github.com/JihongJu/ulauncher-1dictionary
