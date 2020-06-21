@@ -23,6 +23,7 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 
+DEFAULT_VOCABURARIES=[ "deutsch", "english", "espanol", "francais", "italiano", "nederlands", "norsk" ]
 DEFAULT_DICTIONARY="https://translate.google.com/#view=home&op=translate&sl=auto&tl=en&text=%s"
 
 
@@ -69,7 +70,7 @@ class PreferencesEventListener(EventListener):
     def on_event(self, event, extension):
         extension.preferences.update(event.preferences)
 
-        vocabularies = [voc.rstrip().lstrip() for voc in extension.preferences["vocabulary"].split(',')]
+        vocabularies = [voc.rstrip().lstrip().lower() for voc in extension.preferences["vocabulary"].split(',')]
         extension.word_list = load_words(vocabularies)
 
 
@@ -89,13 +90,7 @@ class KeywordQueryEventListener(EventListener):
         items = []
         query = event.get_argument()
         if query:
-            dictionaries = {}
-            for row in extension.preferences["online_dictionary"].split(';'):
-                try:
-                    lang, url = row.split(',')
-                    dictionaries[lang.rstrip().lstrip()] = url.rstrip().lstrip()
-                except ValueError as ve:
-                    logger.exception(ve)
+            dictionaries = get_dictionaries(extension.preferences)
 
             if extension.preferences["matching"] == "regex":
                 result_list = [w for w in extension.word_list if re.search(r'^{}'.format(query), w.get_search_name())]
@@ -136,6 +131,21 @@ class CustomSortedList(SortedList):
     def __init__(self, query, min_score):
         super(CustomSortedList, self).__init__(query, min_score, limit=9)
         self._items = SortedCollection(key=lambda i: (i.score, abs(len(self._query) - len(i.get_search_name()))))
+
+
+
+def get_dictionaries(preferences):
+    dictionaries = {}
+    for row in preferences["online_dictionary"].split(';'):
+        try:
+            if len(row.split(',')) == 2:
+                lang, url = row.split(',')
+                dictionaries[lang.rstrip().lstrip()] = url.rstrip().lstrip()
+        except ValueError as ve:
+            logger.exception(ve)
+    for voc in DEFAULT_VOCABURARIES:
+        dictionaries[voc] = preferences.get(voc, DEFAULT_DICTIONARY)
+    return dictionaries
 
 
 if __name__ == '__main__':

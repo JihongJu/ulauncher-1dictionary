@@ -30,15 +30,64 @@
       "id": "vocabulary",
       "type": "text",
       "name": "Active vocabulary",
-      "description": "Active vocabularies: comma-delimted text. Supported vocabularies: deutsch, english, espanol, francais, italiano, nederlands, norsk, swiss",
+      "description": "Active vocabularies: comma-delimted text. Supported vocabularies: deutsch, english, espanol, francais, italiano, nederlands, norsk",
       "default_value": "english, nederlands"
+    },
+    {
+      "id": "deutsch",
+      "type": "text",
+      "name": "German Dictionary",
+      "description": "Online dictionary for German. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.linguee.com/german-english/search?source=auto&query=%s"
+    },
+    {
+      "id": "english",
+      "type": "text",
+      "name": "English Dictionary",
+      "description": "Online dictionary for English. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.merriam-webster.com/dictionary/%s"
+    },
+    {
+      "id": "espanol",
+      "type": "text",
+      "name": "Spanish Dictionary",
+      "description": "Online dictionary for Spanish. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.spanishdict.com/translate/%s?langFrom=es"
+    },
+    {
+      "id": "francais",
+      "type": "text",
+      "name": "French Dictionary",
+      "description": "Online dictionary for French. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.linguee.com/french-english/search?source=auto&query=%s"
+    },
+    {
+      "id": "italiano",
+      "type": "text",
+      "name": "Italian Dictionary",
+      "description": "Online dictionary for Italian. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.collinsdictionary.com/dictionary/italian-english/%s"
+    },
+    {
+      "id": "nederlands",
+      "type": "text",
+      "name": "Dutch Dictionary",
+      "description": "Online dictionary for Dutch. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://www.linguee.com/dutch-english/search?source=auto&query=%s"
+    },
+    {
+      "id": "norsk",
+      "type": "text",
+      "name": "Norwegian Dictionary",
+      "description": "Online dictionary for Norwegian. Use %s as a placeholder for a query in a URL",
+      "default_value": "https://translate.google.com/#view=home&op=translate&sl=no&tl=en&text=%s"
     },
     {
       "id": "online_dictionary",
       "type": "text",
-      "name": "Online dictionary service",
-      "description": "Query for the online dictionary in the format of 'vocabulary0, query_url0; vocabulary 1, query_url1'. Please refer to https://github.com/JihongJu/ulauncher-1dictionary#configure-online-dictionary-service for more information",
-      "default_value": "english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s"
+      "name": "Other online dictionary service",
+      "description": "Query for the online dictionary in the format of 'vocabulary0, query_url0; vocabulary 1, query_url1'. Please refer to https://github.com/JihongJu/ulauncher-1dictionary#configure-online-dictionary-services for more information",
+      "default_value": ""
     }
   ]
 }

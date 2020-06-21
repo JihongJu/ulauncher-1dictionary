@@ -2,12 +2,12 @@
 <img src="images/icon.png" alt="drawing" width="16"/> 1Dictionary helps you access all your favourite dictionaries easily via Ulauncher. 
 
 
-Key features:
+## Key features
 
-- Fuzzy search: No worries for typo anymore
-- Multi language support: Many languages can be searched altogether. For example, English words can be searched together with Dutch words. 
-- Configurable: English and Nederlands are the default active languages. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information about how to activate other languages, including: Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk, Swiss. 
-- Extensible: It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add custom lanaguage(s) and the corresponding online dictionar~~y~~ies.
+- **Fuzzy search** No worries for typo anymore!
+- **Multi language support** Many languages can be searched altogether. For example, English words can be searched together with Dutch words, as well as French, Spanish, Italian, German, Norwegian, and any other language.
+- **Configurable** English and Nederlands are the default active languages. Check [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) for more information about how to activate other languages.
+- **Extensible** If you are learning languages other than the default supported languages (Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk). It is possible to add more language support. Check the [custom dictionaries](https://github.com/JihongJu/ulauncher-1dictionary#custom-dictionaries) section to add custom lanaguage(s) and the corresponding online dictionar~~y~~ies.
 
 
 ## Usage
@@ -37,7 +37,7 @@ https://github.com/JihongJu/ulauncher-1dictionary
 
 ### Configure vocabulary
 
-By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, Nederlands, Norsk and Swiss. Configuration is possible in the "Vocabulary" section of the extension preference.
+By default, 1Dictionary support Deutsch, English, Espanol, Francais, Italiano, Nederlands, and Norsk.  But only English and German are activated by default. You can modify the list of active vocabularies via the "Vocabulary" section of the extension preference.
 
 Active your favourate vocabulory by adding it to the "Active vocabulary" field as comma-delimted text:
 
@@ -46,25 +46,39 @@ Active your favourate vocabulory by adding it to the "Active vocabulary" field a
 
 Notes:
 
-- The more vocabularies activated, the slower the search is. Speed is often not an issue on most modern computers. But in case you feel laggy. Consider deactivating the vocabularies you don't need, or switch to the 'regex' matching method.
+- The more vocabularies activated, the slower the search is. Speed is often not an issue on modern computers. But in case you feel laggy. Consider deactivating the vocabularies you don't need, or switch to the 'regex' matching method.
+
+
+### Default dictionaries
+
+1Dictionary uses the following online dictionary services for default vocabularies:
+
+Online dictionary service | Vocabulary  |  Dictionary URL 
+--- | --- | --- 
+[Linguee](https://www.linguee.com/)                     | deutsch       | https://www.linguee.com/german-english/search?source=auto&query=%s
+[Merriam-Webster](https://www.merriam-webster.com/)     | english       | https://www.merriam-webster.com/dictionary/%s
+[SpanishDict](https://www.spanishdict.com)              | espanol       | https://www.spanishdict.com/translate/%s?langFrom=es
+[Linguee](https://www.linguee.com/)                     | francais      | https://www.linguee.com/french-english/search?source=auto&query=%s
+[Collins](https://www.collinsdictionary.com/)           | italiano      | https://www.collinsdictionary.com/dictionary/italian-english/%s
+[Linguee](https://www.linguee.com/)                     | nederlands    | https://www.linguee.com/dutch-english/search?source=auto&query=%s
+[Google Translate](https://translate.google.com/)       | norsk         | https://translate.google.com/#view=home&op=translate&sl=no&tl=en&text=%s
 
 
 ### Extend vocabulary
 
-Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, Norsk and Swiss from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vacabulary file.
+Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, and Norsk from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vacabulary file.
 
 The vocabulary files locate in the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary`. Each vocabulary file is a newline-delimited text file. The filename indicates the language, e.g.,
 
 language | vocabulary file name
 --- | ---
-English | [english.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
-Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/english.txt)
+English | [english.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/english.txt)
+Nederlands | [nederlands.txt](https://github.com/JihongJu/ulauncher-1dictionary/blob/master/vocabularies/.txt)
 
 
+### Configure online dictionary services
 
-### Configure online dictionary service
-
-Except for English and Nederlands, 1Dictionary uses [Google Translate](https://translate.google.com/) for other languages. You can add your preferred online dictionary service to gain better experience. 
+1Dictionary uses [Google Translate](https://translate.google.com/) for custom vocabularies. You can add your preferred online dictionary service to gain better experience. 
 
 Online dictionary service can be configured in the "Online dictionary service" field on the extension preference page:
 
@@ -73,9 +87,6 @@ Online dictionary service can be configured in the "Online dictionary service" f
 
 Online dictionary service | Vocabulary needed  |  Configuraion 
 --- | --- | --- 
-[Merriam-Webster](https://www.merriam-webster.com/) | english.txt | english, https://www.merriam-webster.com/dictionary/%s
-[Linguee](https://www.linguee.com/)                 | nederlands.txt | nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s
- [Merriam-Webster](https://www.merriam-webster.com/) and [Linguee](https://www.linguee.com/) | english.txt and nederlands.txt | english, https://www.merriam-webster.com/dictionary/%s ; nederlands, https://www.linguee.com/dutch-english/search?source=auto&query=%s
 Any other online dictionary | anyvocabulary.txt | anyvocabulary, query-for-any-online-dictionary-with-a-word-placeholder-'%s'
 
 Notes:
@@ -97,7 +108,9 @@ VERBOSE=1 ULAUNCHER_WS_API=ws://127.0.0.1:5054/ulauncher-1dictionary PYTHONPATH=
 
 ## References
 
-0. [Merriam-Webster](https://www.merriam-webster.com/) 
-1. [Linguee](https://www.linguee.nl/)
-2. [JUST WORDS!](http://www.gwicks.net/dictionaries.htm)
-
+- [JUST WORDS!](http://www.gwicks.net/dictionaries.htm)
+- [Linguee](https://www.linguee.com/)                     
+- [Merriam-Webster](https://www.merriam-webster.com/)     
+- [SpanishDict](https://www.spanishdict.com)              
+- [Collins](https://www.collinsdictionary.com/)           
+- [Google Translate](https://translate.google.com/)       
