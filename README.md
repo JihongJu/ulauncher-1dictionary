@@ -68,7 +68,7 @@ It is possible to modify the dictionary URL via `Ulauncher->Preferences->Extensi
 
 ### Extend vocabulary
 
-Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, and Norsk from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vacabulary file.
+Deutsch, (US) English, Espanol, Francais, Italiano, Nederlands, and Norsk from [JUST WORDS!](http://www.gwicks.net/dictionaries.htm) are shipped with 1dictionary. You can extend the list by adding a new vocabulary file.
 
 The vocabulary files locate in the directory `~/.local/share/ulauncher/extensions/com.github.jihongju.ulauncher-1dictionary/vocabularies`. Each vocabulary file is a newline-delimited text file. The filename indicates the language, e.g.,
 
